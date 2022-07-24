@@ -11,14 +11,77 @@
     </Window.DataContext>
     
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Solar Meter" FontSize="16"/>
+
+            <Grid Grid.Column="1" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox x:Name="SolarMeterTextbox" Text="{Binding SolarMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp" />
+
+                <Border BorderBrush="#90f44336" Margin="2,0,0,0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=SolarMeterTextbox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock IsHitTestVisible="False" Text="Enter Solar Meter" FontSize="16" Foreground="DarkGray" VerticalAlignment="Center" Margin="7,0,0,0"/>
+                </Border>
+            </Grid>
+
+            <TextBlock Grid.Column="2" Text="Grid Meter" FontSize="16"/>
+
+            <Grid Grid.Column="3" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox x:Name="GridMeterTextbox" Text="{Binding GridMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp"/>
+
+                <Border BorderBrush="#90f44336" Margin="2,0,0,0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=GridMeterTextbox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock IsHitTestVisible="False" Text="Enter Grid Meter" FontSize="16" Foreground="DarkGray" VerticalAlignment="Center" Margin="7,0,0,0"/>
+                </Border>
+            </Grid>
+
+            <TextBlock Grid.Column="4" Text="Time/Date" FontSize="16"/>
+
+            <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding TimeOfRecording}" Grid.Column="5"/>
+            
+            
+
+            <Button Grid.Column="6" Content="Add" ToolTip="Add Solar Entry" Command="{Binding AddSolarEntryCommand}"/>
+
+        </Grid>
+
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}">
+
+        </DataGrid>
+
+
     </Grid>
 </Window>

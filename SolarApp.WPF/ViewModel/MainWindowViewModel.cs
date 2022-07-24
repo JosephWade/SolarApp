@@ -1,6 +1,9 @@
 using MVVM.WPF;
 using SolarApp.Data;
 using SolarApp.WPF.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace SolarApp.WPF.ViewModel
 {
@@ -38,6 +41,60 @@ namespace SolarApp.WPF.ViewModel
             {
                 SetField(ref commonVariables, value);
             }
+        }
+
+        private List<SolarEntry> listOfSolarEntries = new List<SolarEntry>();
+        public List<SolarEntry> ListOfSolarEntries
+        {
+            get => listOfSolarEntries;
+            set
+            {
+                SetField(ref listOfSolarEntries, value);
+            }
+        }
+
+        private string solarMeterTextbox = "";
+        public string SolarMeterTextbox
+        {
+            get => solarMeterTextbox;
+            set
+            {
+                SetField(ref solarMeterTextbox, new string(value));
+            }
+        }
+
+        private string gridMeterTextbox = "";
+        public string GridMeterTextbox
+        {
+            get => gridMeterTextbox;
+            set
+            {
+                SetField(ref gridMeterTextbox, new string(value));
+            }
+        }
+
+        private DateTime timeOfRecording = new DateTime();
+        public DateTime TimeOfRecording
+        {
+            get => timeOfRecording;
+            set
+            {
+                SetField(ref timeOfRecording, value);
+            }
+        }
+
+
+        public ICommand AddSolarEntryCommand
+        {
+            get
+            {
+                return new DelegateCommand(AddSolarEntry);
+            }
+        }
+
+        public void AddSolarEntry()
+        {
+
         }
 
     }

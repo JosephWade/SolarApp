@@ -24,5 +24,13 @@ namespace SolarApp.WPF
         {
             InitializeComponent();
         }
+
+        private void text_PrviewKeyUp(object sender, KeyEventArgs e)
+        {
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateTarget();
+        }
+
+
     }
 }
