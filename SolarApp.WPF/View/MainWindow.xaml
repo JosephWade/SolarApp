@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolarApp.WPF" xmlns:ViewModel="clr-namespace:SolarApp.WPF.ViewModel"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800" Style="{DynamicResource CustomWindowStyle}">
+        Title="{Binding WindowTitle}" Height="450" Width="800" Style="{DynamicResource CustomWindowStyle}" Background="#444444">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
@@ -69,16 +70,32 @@
 
             <TextBlock Grid.Column="4" Text="Time/Date" FontSize="16"/>
 
-            <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding TimeOfRecording}" Grid.Column="5"/>
-            
-            
+            <!--<DatePicker IsTodayHighlighted="True" SelectedDate="{Binding TimeOfRecording}" />-->
+            <toolkit:DateTimePicker Value="{Binding TimeOfRecording, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" DefaultValue="{Binding DefaultRecordingTime, NotifyOnSourceUpdated=True}" Grid.Column="5">
+                <toolkit:DateTimePicker.Style>
+                    <Style TargetType="{x:Type toolkit:DateTimePicker}">
+                        <Setter Property="Background" Value="#232323"/>
+                        <Setter Property="Foreground" Value="#ebebeb"/>
+                    </Style>
+                </toolkit:DateTimePicker.Style>
+            </toolkit:DateTimePicker>
 
-            <Button Grid.Column="6" Content="Add" ToolTip="Add Solar Entry" Command="{Binding AddSolarEntryCommand}"/>
+
+
+
+            <Button Grid.Column="6" Margin="10,2" Background="#333333" BorderThickness="1" BorderBrush="#222222" Content="Add" ToolTip="Add Solar Entry" Command="{Binding AddSolarEntryCommand}"/>
 
         </Grid>
 
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}">
+        <DataGrid Grid.Row="1" ColumnWidth="*" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="Background" Value="#555555"/>
+                    <Setter Property="SeparatorBrush" Value="#333333"/>
+                    <Setter Property="Foreground" Value="#333333"/>
+                </Style>
+            </DataGrid.Resources>
 
         </DataGrid>
 

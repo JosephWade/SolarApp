@@ -17,6 +17,7 @@ namespace SolarApp.WPF.ViewModel
 
         public void StartUp()
         {
+            
             CommonVariables.DataMan = new DataManager();
             CommonVariables.MainWindowVM = this;
 
@@ -73,7 +74,17 @@ namespace SolarApp.WPF.ViewModel
             }
         }
 
-        private DateTime timeOfRecording = new DateTime();
+        private DateTime defaultRecordingTime = DateTime.Now;
+        public DateTime DefaultRecordingTime
+        {
+            get => defaultRecordingTime;
+            set
+            {
+                SetField(ref defaultRecordingTime, value);
+            }
+        }
+
+        private DateTime timeOfRecording = DateTime.Now;
         public DateTime TimeOfRecording
         {
             get => timeOfRecording;
@@ -94,7 +105,14 @@ namespace SolarApp.WPF.ViewModel
 
         public void AddSolarEntry()
         {
-
+            if(TimeOfRecording != null)
+            {
+                WindowTitle = $"Sucessful = {TimeOfRecording} - {DefaultRecordingTime}";
+            }
+            else
+            {
+                WindowTitle = "Not good";
+            }
         }
 
     }

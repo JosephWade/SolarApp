@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace SolarApp.WPF
 {
@@ -31,6 +32,19 @@ namespace SolarApp.WPF
             ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateTarget();
         }
 
+        private void DateTimePicker_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ((DateTimePicker)sender).GetBindingExpression(DateTimePicker.TextProperty).UpdateSource();
+        }
 
+        private string textForRecording = "123";
+        public string TextForRecording
+        {
+            get => TextForRecording;
+            set
+            {
+                textForRecording = value;
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary x:Class="REghZyFramework.Themes.DarkTheme"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:Converters="clr-namespace:SolarApp.WPF.Utilities.Converters">
     <!-- Window Colours. Background, Border and TitleBar colours. -->
     <SolidColorBrush x:Key="BackgroundColour" Color="#FF232323" />
     <SolidColorBrush x:Key="WindowBorderColour" Color="#FF343434" />
@@ -4490,7 +4490,7 @@
                 <ControlTemplate TargetType="{x:Type DataGrid}">
                     <Border x:Name="border" SnapsToDevicePixels="True" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
                         <Border.Background>
-                            <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
+                            <SolidColorBrush Color="#333333" />
                         </Border.Background>
                         <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false" Background="Black">
                             <ScrollViewer.Template>
