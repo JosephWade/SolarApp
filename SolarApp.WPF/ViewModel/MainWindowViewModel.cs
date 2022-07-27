@@ -50,7 +50,7 @@ namespace SolarApp.WPF.ViewModel
             get => listOfSolarEntries;
             set
             {
-                SetField(ref listOfSolarEntries, value);
+                SetField(ref listOfSolarEntries, new List<SolarEntry>(value));
             }
         }
 
@@ -105,13 +105,18 @@ namespace SolarApp.WPF.ViewModel
 
         public void AddSolarEntry()
         {
-            if(TimeOfRecording != null)
+            int solarMeterReading = 0;
+            int gridMeterReading = 0;
+            if (Int32.TryParse((SolarMeterTextbox), out solarMeterReading) && Int32.TryParse((GridMeterTextbox), out gridMeterReading))
             {
+                SolarEntry newEntry = new SolarEntry(solarMeterReading, gridMeterReading, TimeOfRecording);
+                ListOfSolarEntries.Add(newEntry);
+                ListOfSolarEntries = ListOfSolarEntries;
                 WindowTitle = $"Sucessful = {TimeOfRecording} - {DefaultRecordingTime}";
             }
             else
             {
-                WindowTitle = "Not good";
+                WindowTitle = $"Unable to add new entry";
             }
         }
 

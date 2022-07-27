@@ -11,6 +11,12 @@ namespace SolarApp.Data
 
         }
 
+        public SolarEntry(int solarMeterReading, int gridMeterReading, DateTime timeOfRecording)
+        {
+            SolarMeterReading = solarMeterReading;
+            GridMeterReading = gridMeterReading;
+            TimeOfRecording = timeOfRecording;
+        }
 
         public override string ToString()
         {
@@ -38,7 +44,7 @@ namespace SolarApp.Data
             }
         }
 
-        private DateTime timeOfRecording = new DateTime();
+        private DateTime timeOfRecording;
         public DateTime TimeOfRecording
         {
             get => timeOfRecording;

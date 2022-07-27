@@ -46,5 +46,10 @@ namespace SolarApp.WPF
                 textForRecording = value;
             }
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ((DataGrid)sender).GetBindingExpression(DataGrid.ItemsSourceProperty).UpdateSource();
+        }
     }
 }
