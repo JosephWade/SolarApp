@@ -143,7 +143,7 @@
         </Grid>
 
 
-        <DataGrid Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="-7,0,0,0">
+        <DataGrid x:Name="SolarEntriesDataGrid" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="-7,0,0,0">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                     <Setter Property="Background" Value="#555555"/>

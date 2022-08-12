@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -47,17 +49,7 @@ namespace SolarApp.WPF.ViewModel
             {
                 SetField(ref commonVariables, value);
             }
-        }
-
-        private List<SolarEntry> listOfSolarEntries = new List<SolarEntry>();
-        public List<SolarEntry> ListOfSolarEntries
-        {
-            get => listOfSolarEntries;
-            set
-            {
-                SetField(ref listOfSolarEntries, new List<SolarEntry>(value));
-            }
-        }
+        }        
 
         private string solarMeterTextbox = "";
         public string SolarMeterTextbox
@@ -129,7 +121,7 @@ namespace SolarApp.WPF.ViewModel
             }
         }*/
 
-        public void AddSolarEntry()
+        public async void AddSolarEntry()
         {
             int solarMeterReading = 0;
             int gridMeterReading = 0;
@@ -137,11 +129,14 @@ namespace SolarApp.WPF.ViewModel
             int gasMeterReading = 0;
             Keyboard.ClearFocus();
 
-            if (TimeOfRecording != null && Int32.TryParse((SolarMeterTextbox), out solarMeterReading) && Int32.TryParse((GridMeterTextbox), out gridMeterReading)&& Int32.TryParse((GasMeterTextbox), out gasMeterReading)&& Int32.TryParse((WaterMeterTextbox), out waterMeterReading) )
+            if (Int32.TryParse((SolarMeterTextbox), out solarMeterReading) && Int32.TryParse((GridMeterTextbox), out gridMeterReading)&& Int32.TryParse((GasMeterTextbox), out gasMeterReading)&& Int32.TryParse((WaterMeterTextbox), out waterMeterReading) )
             {
                 SolarEntry newEntry = new SolarEntry(solarMeterReading, gridMeterReading, TimeOfRecording, waterMeterReading, gasMeterReading);
-                ListOfSolarEntries.Add(newEntry);
-                ListOfSolarEntries = ListOfSolarEntries;
+                CommonVariables.DataMan.ListOfSolarEntries.Add(newEntry);
+                CommonVariables.MainWindowCodeBehind.SolarEntriesDataGrid.Items.Refresh();
+                CommonVariables.DataMan.ExportData();
+
+
                 WindowTitle = $"Sucessful = {TimeOfRecording} - {DefaultRecordingTime}";
                 FadeAddButtonGreen();
             }
@@ -150,6 +145,9 @@ namespace SolarApp.WPF.ViewModel
                 WindowTitle = $"Unable to add new entry";
                 FadeAddButtonRed();
             }
+
+            await Task.Delay(5000);
+            WindowTitle = "";
         }
 
 

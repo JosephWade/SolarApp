@@ -1,4 +1,5 @@
-﻿using SolarApp.WPF.ViewModel;
+﻿using SolarApp.WPF.Utilities;
+using SolarApp.WPF.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +79,7 @@ namespace SolarApp.WPF
         private void AddButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ((MainWindowViewModel)DataContext).AddSolarEntry();
+            //BindingOperations.GetBindingExpression(SolarEntriesDataGrid, DataGrid.ItemsSourceProperty).UpdateSource();
         }
 
         
