@@ -11,7 +11,7 @@
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     
-    <Grid>
+    <Grid IsMouseCapturedChanged="AddButton_IsMouseCaptureWithinChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>

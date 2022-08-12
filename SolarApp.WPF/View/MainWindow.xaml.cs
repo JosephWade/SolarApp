@@ -79,5 +79,7 @@ namespace SolarApp.WPF
         {
             ((MainWindowViewModel)DataContext).AddSolarEntry();
         }
+
+        
     }
 }

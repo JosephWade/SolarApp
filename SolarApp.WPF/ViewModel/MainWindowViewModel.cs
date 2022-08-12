@@ -133,10 +133,10 @@ namespace SolarApp.WPF.ViewModel
         {
             int solarMeterReading = 0;
             int gridMeterReading = 0;
-            int gasMeterReading = 0;
             int waterMeterReading = 0;
-            Keyboard.ClearFocus();
-            if (Int32.TryParse((SolarMeterTextbox), out solarMeterReading) && Int32.TryParse((GridMeterTextbox), out gridMeterReading) && Int32.TryParse((WaterMeterTextbox), out waterMeterReading)&& Int32.TryParse((GasMeterTextbox), out gasMeterReading))
+            int gasMeterReading = 0;
+
+            if(TimeOfRecording != null && Int32.TryParse((SolarMeterTextbox), out solarMeterReading) && Int32.TryParse((GridMeterTextbox), out gridMeterReading)&& Int32.TryParse((GasMeterTextbox), out gasMeterReading)&& Int32.TryParse((WaterMeterTextbox), out waterMeterReading) )
             {
                 SolarEntry newEntry = new SolarEntry(solarMeterReading, gridMeterReading, TimeOfRecording, waterMeterReading, gasMeterReading);
                 ListOfSolarEntries.Add(newEntry);
