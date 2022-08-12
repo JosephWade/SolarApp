@@ -2,6 +2,12 @@
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:Converters="clr-namespace:SolarApp.WPF.Utilities.Converters">
+    <!-- Custom ColorBlind Friendly Red/Green Alternatives -->
+    <SolidColorBrush x:Key="cRed" Color="#FFDB4325" />
+    <SolidColorBrush x:Key="cOrange" Color="#FFEDA247" />
+    <SolidColorBrush x:Key="cLightYellow" Color="#FFE6E1BC" />
+    <SolidColorBrush x:Key="cGreen" Color="#FF57C4AD" />
+    <SolidColorBrush x:Key="cDarkGreen" Color="#FF006164" />
     <!-- Window Colours. Background, Border and TitleBar colours. -->
     <SolidColorBrush x:Key="BackgroundColour" Color="#FF232323" />
     <SolidColorBrush x:Key="WindowBorderColour" Color="#FF343434" />
@@ -9,7 +15,7 @@
     <!-- Control colour themes. dont mess with em okay unless youre good at styles -->
     <!-- Complete DarkTheme Colours -->
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="ContainerBackground" Color="#FF272727" />
+    <SolidColorBrush x:Key="ContainerBackground" Color="#FF333333" />
     <SolidColorBrush x:Key="ContainerBorder" Color="#FF2B2B2B" />
     <SolidColorBrush x:Key="ControlDefaultForeground" Color="#FFEBEBEB" />
 

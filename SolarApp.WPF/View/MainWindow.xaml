@@ -13,7 +13,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -25,10 +25,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Solar Meter" FontSize="16"/>
+            <TextBlock Grid.Column="0" Text="Solar:" FontSize="16" Margin="5,0,3,0"/>
 
             <Grid Grid.Column="1" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBox x:Name="SolarMeterTextbox" Text="{Binding SolarMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp" />
@@ -48,7 +52,7 @@
                 </Border>
             </Grid>
 
-            <TextBlock Grid.Column="2" Text="Grid Meter" FontSize="16"/>
+            <TextBlock Grid.Column="2" Text="Grid:" FontSize="16" Margin="5,0,3,0"/>
 
             <Grid Grid.Column="3" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBox x:Name="GridMeterTextbox" Text="{Binding GridMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp"/>
@@ -68,10 +72,50 @@
                 </Border>
             </Grid>
 
-            <TextBlock Grid.Column="4" Text="Time/Date" FontSize="16"/>
+            <TextBlock Grid.Column="4" Text="Water:" FontSize="16" Margin="5,0,3,0"/>
+
+            <Grid Grid.Column="5" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox x:Name="WaterMeterTextbox" Text="{Binding WaterMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp"/>
+
+                <Border BorderBrush="#90f44336" Margin="2,0,0,0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=WaterMeterTextbox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock IsHitTestVisible="False" Text="Enter Grid Meter" FontSize="16" Foreground="DarkGray" VerticalAlignment="Center" Margin="7,0,0,0"/>
+                </Border>
+            </Grid>
+
+            <TextBlock Grid.Column="6" Text="Gas:" FontSize="16" Margin="5,0,3,0"/>
+
+            <Grid Grid.Column="7" Margin="0,0,3,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox x:Name="GasMeterTextbox" Text="{Binding GasMeterTextbox, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" FontSize="16" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" PreviewKeyUp="text_PrviewKeyUp"/>
+
+                <Border BorderBrush="#90f44336" Margin="2,0,0,0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=GasMeterTextbox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock IsHitTestVisible="False" Text="Enter Grid Meter" FontSize="16" Foreground="DarkGray" VerticalAlignment="Center" Margin="7,0,0,0"/>
+                </Border>
+            </Grid>
+
+            
 
             <!--<DatePicker IsTodayHighlighted="True" SelectedDate="{Binding TimeOfRecording}" />-->
-            <toolkit:DateTimePicker Value="{Binding TimeOfRecording, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" DefaultValue="{Binding DefaultRecordingTime, NotifyOnSourceUpdated=True}" Grid.Column="5">
+            <toolkit:DateTimePicker Value="{Binding TimeOfRecording, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" DefaultValue="{Binding DefaultRecordingTime, NotifyOnSourceUpdated=True}" Grid.Column="9">
                 <toolkit:DateTimePicker.Style>
                     <Style TargetType="{x:Type toolkit:DateTimePicker}">
                         <Setter Property="Background" Value="#232323"/>
@@ -80,15 +124,26 @@
                 </toolkit:DateTimePicker.Style>
             </toolkit:DateTimePicker>
 
-
-
-
-            <Button Grid.Column="6" Margin="10,2" Background="#333333" BorderThickness="1" BorderBrush="#222222" Content="Add" ToolTip="Add Solar Entry" Command="{Binding AddSolarEntryCommand}"/>
+            <!-- We need custom color functionality, so let's make our own button -->
+            <Border CornerRadius="3" x:Name="AddButton" MouseDown="AddButton_MouseDown" IsMouseDirectlyOverChanged="AddButton_IsMouseCaptureWithinChanged" Grid.Column="10" Margin="10,2" Background="#333333" BorderThickness="1" BorderBrush="#222222" ToolTip="Add Solar Entry" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image Grid.Column="0" Margin="1" RenderOptions.BitmapScalingMode="HighQuality"  Source="/images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="Add"/>
+                    <Image Grid.Column="2" Margin="1" RenderOptions.BitmapScalingMode="HighQuality"  Source="/images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                
+            </Border>
 
         </Grid>
 
 
-        <DataGrid Grid.Row="1" ColumnWidth="*" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <DataGrid Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="-7,0,0,0">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                     <Setter Property="Background" Value="#555555"/>
@@ -98,6 +153,7 @@
             </DataGrid.Resources>
 
         </DataGrid>
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="#333333" Width="7.5" Margin="-7,17,0,0" />
 
 
     </Grid>

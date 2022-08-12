@@ -11,10 +11,18 @@ namespace SolarApp.Data
 
         }
 
+        public SolarEntry(int solarMeterReading, int gridMeterReading, DateTime timeOfRecording, int waterMeterReading, int gasMeterReading)
+        {
+            SolarMeterReading = solarMeterReading;
+            GridMeterReading = gridMeterReading;
+            TimeOfRecording = timeOfRecording;
+            WaterMeterReading = waterMeterReading;
+            GasMeterReading = gasMeterReading;
+        }
 
         public override string ToString()
         {
-            return $"Solar Entry recorded at ({TimeOfRecording.ToString("MM / dd / yyyy h: mm tt")}). Solar: {SolarMeterReading} | Grid: {GridMeterReading}";
+            return $"Solar Entry recorded at ({TimeOfRecording.ToString("MM / dd / yyyy h: mm tt")}). Solar: {SolarMeterReading} | Grid: {GridMeterReading} | Gas: {GasMeterReading} | Water: {WaterMeterReading}";
         }
 
 
@@ -38,7 +46,28 @@ namespace SolarApp.Data
             }
         }
 
-        private DateTime timeOfRecording = new DateTime();
+        private int gasMeterReading = -1;
+        public int GasMeterReading
+        {
+            get => gasMeterReading;
+            set
+            {
+                SetField(ref gasMeterReading, value);
+            }
+        }
+        
+
+        private int waterMeterReading = -1;
+        public int WaterMeterReading
+        {
+            get => waterMeterReading;
+            set
+            {
+                SetField(ref waterMeterReading, value);
+            }
+        }
+
+        private DateTime timeOfRecording;
         public DateTime TimeOfRecording
         {
             get => timeOfRecording;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SolarApp.WPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,15 @@ namespace SolarApp.WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            Task.Delay(10);
+
+            StartUp();
+        }
+
+        public async void StartUp()
+        {
+            ((MainWindowViewModel)DataContext).CommonVariables.MainWindowCodeBehind = this;
         }
 
         private void text_PrviewKeyUp(object sender, KeyEventArgs e)
@@ -45,6 +55,29 @@ namespace SolarApp.WPF
             {
                 textForRecording = value;
             }
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ((DataGrid)sender).GetBindingExpression(DataGrid.ItemsSourceProperty).UpdateSource();
+        }
+
+        private void AddButton_IsMouseCaptureWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (((Border)sender).IsMouseOver)
+            {
+                ((MainWindowViewModel)DataContext).DecideWhatColorAddButtonShouldBe(0);
+            }
+            else
+            {
+                ((MainWindowViewModel)DataContext).DecideWhatColorAddButtonShouldBe(1);
+            }
+            
+        }
+
+        private void AddButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).AddSolarEntry();
         }
     }
 }

@@ -31,5 +31,15 @@ namespace SolarApp.WPF.Utilities
             }
         }
 
+        private MainWindow mainWindowCodeBehind;
+        public MainWindow MainWindowCodeBehind
+        {
+            get => mainWindowCodeBehind;
+            set
+            {
+                SetField(ref mainWindowCodeBehind, value);
+            }
+        }
+
     }
 }
