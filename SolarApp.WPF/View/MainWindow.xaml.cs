@@ -35,6 +35,10 @@ namespace SolarApp.WPF
         public async void StartUp()
         {
             ((MainWindowViewModel)DataContext).CommonVariables.MainWindowCodeBehind = this;
+
+            Task.Delay(10);
+
+            SolarEntriesDataGrid.Items.Refresh();
         }
 
         private void text_PrviewKeyUp(object sender, KeyEventArgs e)

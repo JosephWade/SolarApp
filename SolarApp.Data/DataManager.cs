@@ -10,6 +10,11 @@ namespace SolarApp.Data
         public string ApplicationVersion = "0.0.1";
         public string DatabaseFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}Data{Path.DirectorySeparatorChar}SolarApp.json";
 
+        public DataManager()
+        {
+            ImportData();
+        }
+
         public override string ToString()
         {
             return $"DataManager. SolarEntries: {ListOfSolarEntries.Count}";
@@ -76,7 +81,7 @@ namespace SolarApp.Data
                 {
                     try
                     {
-                        ListOfSolarEntries = JsonConvert.DeserializeObject<List<SolarEntry>>(DatabaseFile);
+                        ListOfSolarEntries = JsonConvert.DeserializeObject<List<SolarEntry>>(File.ReadAllText(DatabaseFile));
                     }
                     catch(Exception e)
                     {
@@ -91,7 +96,7 @@ namespace SolarApp.Data
                     WriteLog($"Backup File does not exist, so the backup database file was used ({DatabaseFile}.backup).");
                     try
                     {
-                        ListOfSolarEntries = JsonConvert.DeserializeObject<List<SolarEntry>>(DatabaseFile+".backup");
+                        ListOfSolarEntries = JsonConvert.DeserializeObject<List<SolarEntry>>(File.ReadAllText(DatabaseFile +".backup"));
                     }
                     catch (Exception e)
                     {
