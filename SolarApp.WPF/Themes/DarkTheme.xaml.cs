@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 
 namespace REghZyFramework.Themes {
-    public partial class DarkTheme {
+    public partial class ColorfulDarkTheme {
         private void CloseWindow_Event(object sender, RoutedEventArgs e) {
             if (e.Source != null)
                 try {
