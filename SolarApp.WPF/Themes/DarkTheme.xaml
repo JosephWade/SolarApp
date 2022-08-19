@@ -11,7 +11,7 @@
 
     <!-- Additional Custom colors -->
     <SolidColorBrush x:Key="MouseOverListItem" Color="#FF4c4f75" />
-    <SolidColorBrush x:Key="HighlightColor" Color="#FF5053e6" />
+    <SolidColorBrush x:Key="HighlightColor" Color="#FF6f648c" />
     
     <!-- Window Colors. Background, Border and TitleBar colors. -->
     <SolidColorBrush x:Key="BackgroundColor" Color="#FF232323" />

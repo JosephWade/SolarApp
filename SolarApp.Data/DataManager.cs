@@ -13,6 +13,7 @@ namespace SolarApp.Data
         public DataManager()
         {
             ImportData();
+
         }
 
         public override string ToString()
@@ -104,10 +105,21 @@ namespace SolarApp.Data
                     }
                 }
             }
-            
-            
+
+            CalculateAverages();
         }
 
+
+        public void CalculateAverages()
+        {
+            ListOfSolarEntries = listOfSolarEntries.OrderBy(entry => entry.TimeOfRecording).ToList();
+
+            // Note: Disregard first and last entry as the average data can't be calculated for them
+            for(int i = 1; i < listOfSolarEntries.Count-1; i++)
+            {
+                //Do something with: ListOfSolarEntries[i];
+            }
+        }
 
 
     }
