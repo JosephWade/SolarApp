@@ -119,9 +119,39 @@ namespace SolarApp.Data
             CalculateAverages();
         }
 
-        public void CalculateAveragesHelper(List<SolarEntry> listOfEntriesToAverage)
+
+
+        public double CalculateWeightedAveragesofListHelper(List<SolarEntry> listOfEntriesToAverage, int field)
         {
-            // Take weighted
+            // TO DO: Take weighted average of list of entries 
+
+            switch (field)
+            {
+                case 0: // solar
+
+                    break;
+                case 1: // grid
+
+                    break;
+                case 2: // gas
+
+                    break;
+                case 3: // water
+
+                    break;
+            }
+
+            return -1;
+        }
+        
+        public CleanEntry CalculateWeightedAveragesofList(DateTime date, List<SolarEntry> listOfEntriesToAverage)
+        {
+            double solarAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 0);
+            double gridAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 1);
+            double gasAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 2);
+            double waterAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 3);
+
+            return new CleanEntry(date,solarAverage,gridAverage,gasAverage,waterAverage);
         }
 
         public void CalculateAverages()
@@ -139,11 +169,14 @@ namespace SolarApp.Data
             // Note: Disregard first and last entry as the average data can't be calculated for them
             List<DateTime> listOfDatesThatCanBeCleaned = DateRange(ListOfSolarEntries[1].TimeOfRecording, ListOfSolarEntries[ListOfSolarEntries.Count-2].TimeOfRecording);
 
+            List<int> datesThatNeedToBeFilled = new List<int>();
+
             int indexOfListOfSolarEntries = 0;
 
-            foreach (DateTime date in listOfDatesThatCanBeCleaned)
+            for (int dateIndex = 0; dateIndex < listOfDatesThatCanBeCleaned.Count; dateIndex++)
             {
                 List<SolarEntry> solarEntriesWithinCurrentDay = new List<SolarEntry>();
+                DateTime date = listOfDatesThatCanBeCleaned[dateIndex];
 
                 // figure out which listOfSolarEntries of within this day's range += 12 hours
                 for (int i = indexOfListOfSolarEntries; i < listOfSolarEntries.Count; i++)
@@ -161,19 +194,22 @@ namespace SolarApp.Data
                 
                 if (solarEntriesWithinCurrentDay.Count > 0)
                 {
-                    // excute helper function for all of these dates within this range.
-                    //var output = CalculateAveragesHelper(solarEntriesWithinCurrentDay);
-                    
-                    //CleanEntry newEntry = new CleanEntry(Date, solar, grid, water, gas);
-                    //ListOfCleanData.Add();
+                    CleanEntry newEntry = CalculateWeightedAveragesofList(date, solarEntriesWithinCurrentDay);
+                    ListOfCleanData.Add(newEntry);
                 }
                 else
                 {
                     // If no dates are within this day's range, extrapulate this date's time with the next one's
                     // NOTE: Based off of how this is set up, there is guarantee to be a first/last day
-
+                    // NOTE: This will be done after all of the cleanEntries have been filled
+                    ListOfCleanData.Add(new CleanEntry(date, -1, -1, -1, -1));
+                    datesThatNeedToBeFilled.Add(dateIndex);
                 }
+            }
 
+            for (int dateIndex = 0; dateIndex < datesThatNeedToBeFilled.Count; dateIndex++)
+            {
+                // To-do : Fill dates that need to be extrapolated
 
             }
 

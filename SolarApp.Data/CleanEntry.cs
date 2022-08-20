@@ -6,9 +6,13 @@ namespace SolarApp.Data
 {
     public class CleanEntry : ModelBase
     {
-        public CleanEntry()
+        public CleanEntry(DateTime cleanDate, double solarLastDay_clean, double gridLastDay_clean, double gasLastDay_clean, double waterLastDay_clean)
         {
-
+            CleanedDate = cleanDate;
+            SolarLastDay_clean = solarLastDay_clean;
+            GridLastDay_clean = gridLastDay_clean;
+            GasLastDay_clean = gasLastDay_clean;
+            WaterLastDay_clean = waterLastDay_clean;
         }
 
         public override string ToString()
