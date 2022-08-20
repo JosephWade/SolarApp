@@ -31,6 +31,16 @@ namespace SolarApp.Data
             }
         }
 
+        private List<CleanEntry> listOfCleanData= new List<CleanEntry>();
+        public List<CleanEntry> ListOfCleanData
+        {
+            get => listOfCleanData;
+            set
+            {
+                SetField(ref listOfCleanData, value);
+            }
+        }
+
         public void WriteLog(string message)
         {
             Console.WriteLine($"[{DateTime.Now.ToString("MM/dd/yy hh:mm:ss tt")}][{(new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name}] {message}");
@@ -109,16 +119,69 @@ namespace SolarApp.Data
             CalculateAverages();
         }
 
+        public void CalculateAveragesHelper(List<SolarEntry> listOfEntriesToAverage)
+        {
+            // Take weighted
+        }
 
         public void CalculateAverages()
         {
+            // We need at least three elements to get the last 24 hours
+            if(ListOfSolarEntries == null || ListOfSolarEntries.Count < 3)
+            {
+                return;
+            }
+
             ListOfSolarEntries = listOfSolarEntries.OrderBy(entry => entry.TimeOfRecording).ToList();
 
+            // Generate the list of dates that can be cleaned.
+            // This will be used as the basis for the 24 hour average.
             // Note: Disregard first and last entry as the average data can't be calculated for them
-            for(int i = 1; i < listOfSolarEntries.Count-1; i++)
+            List<DateTime> listOfDatesThatCanBeCleaned = DateRange(ListOfSolarEntries[1].TimeOfRecording, ListOfSolarEntries[ListOfSolarEntries.Count-2].TimeOfRecording);
+
+            int indexOfListOfSolarEntries = 0;
+
+            foreach (DateTime date in listOfDatesThatCanBeCleaned)
             {
-                //Do something with: ListOfSolarEntries[i];
+                List<SolarEntry> solarEntriesWithinCurrentDay = new List<SolarEntry>();
+
+                // figure out which listOfSolarEntries of within this day's range += 12 hours
+                for (int i = indexOfListOfSolarEntries; i < listOfSolarEntries.Count; i++)
+                {
+                    if (date.AddHours(-12) <= listOfSolarEntries[i].TimeOfRecording && listOfSolarEntries[i].TimeOfRecording < date.AddHours(12))
+                    {
+                        solarEntriesWithinCurrentDay.Add(listOfSolarEntries[i]);
+                    }
+                    else
+                    {
+                        indexOfListOfSolarEntries = i;
+                        break;
+                    }
+                }
+                
+                if (solarEntriesWithinCurrentDay.Count > 0)
+                {
+                    // excute helper function for all of these dates within this range.
+                    //var output = CalculateAveragesHelper(solarEntriesWithinCurrentDay);
+                    
+                    //CleanEntry newEntry = new CleanEntry(Date, solar, grid, water, gas);
+                    //ListOfCleanData.Add();
+                }
+                else
+                {
+                    // If no dates are within this day's range, extrapulate this date's time with the next one's
+                    // NOTE: Based off of how this is set up, there is guarantee to be a first/last day
+
+                }
+
+
             }
+
+        }
+
+        public List<DateTime> DateRange(DateTime startDate, DateTime endDate)
+        {
+            return Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d)).ToList();
         }
 
 
