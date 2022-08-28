@@ -6,9 +6,10 @@ namespace SolarApp.Data
 {
     public class CleanEntry : ModelBase
     {
-        public CleanEntry(DateTime cleanDate, double solarLastDay_clean, double gridLastDay_clean, double gasLastDay_clean, double waterLastDay_clean)
+        public CleanEntry(DateTime cleanDate, List<SolarEntry> relatedEntries, double solarLastDay_clean, double gridLastDay_clean, double gasLastDay_clean, double waterLastDay_clean)
         {
             CleanedDate = cleanDate;
+            RelatedEntries = relatedEntries;
             SolarLastDay_clean = solarLastDay_clean;
             GridLastDay_clean = gridLastDay_clean;
             GasLastDay_clean = gasLastDay_clean;
@@ -20,13 +21,13 @@ namespace SolarApp.Data
             return $"Clean Date at ({CleanedDate.ToString("MM / dd / yyyy h: mm tt")}). Solar Used: {SolarLastDay_clean} | Grid Used: {GridLastDay_clean} | Gas Used: {GasLastDay_clean} | Water: {WaterLastDay_clean}";
         }
 
-        private List<SolarEntry> listOfRelatedEntries = new List<SolarEntry>();
-        public List<SolarEntry> ListOfRelatedEntries
+        private List<SolarEntry> relatedEntries = new List<SolarEntry>();
+        public List<SolarEntry> RelatedEntries
         {
-            get => listOfRelatedEntries;
+            get => relatedEntries;
             set
             {
-                SetField(ref listOfRelatedEntries, value);
+                SetField(ref relatedEntries, value);
             }
         }
 
