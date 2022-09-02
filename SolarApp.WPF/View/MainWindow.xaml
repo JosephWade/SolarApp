@@ -144,7 +144,7 @@
         </Grid>
 
 
-        <DataGrid x:Name="SolarEntriesDataGrid" Background="#FF333333" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" VirtualizingPanel.ScrollUnit="Pixel" IsReadOnly="True" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,0">
+        <!--<DataGrid x:Name="SolarEntriesDataGrid" Background="#FF333333" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" VirtualizingPanel.ScrollUnit="Pixel" IsReadOnly="True" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,0">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                     <Setter Property="Background" Value="#555555"/>
@@ -167,17 +167,56 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Solar" Binding="{Binding Path=SolarMeterReading}" Width="50"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding Path=TimeOfRecording}" Width="50"/>
+                
                 <DataGridTextColumn Header="Grid" Binding="{Binding Path=GridMeterReading}" Width="50"/>
+                <DataGridTextColumn Header="Solar" Binding="{Binding Path=SolarMeterReading}" Width="50"/>
+                
                 <DataGridTextColumn Header="Water" Binding="{Binding Path=WaterMeterReading}" Width="50"/>
                 <DataGridTextColumn Header="Gas" Binding="{Binding Path=GasMeterReading}" Width="50"/>
-                <DataGridTextColumn Header="Time" Binding="{Binding Path=TimeOfRecording}" Width="*"/>
-
-
+                
             </DataGrid.Columns>
             
 
+        </DataGrid>-->
+
+        <DataGrid x:Name="SolarEntriesDataGrid" Background="#FF333333" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" VirtualizingPanel.ScrollUnit="Pixel" IsReadOnly="True" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.CleanData, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,0">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="Background" Value="#555555"/>
+                    <Setter Property="SeparatorBrush" Value="#333333"/>
+                    <Setter Property="Foreground" Value="#333333"/>
+                </Style>
+
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="Background" Value="#555555"/>
+                    <Setter Property="Foreground" Value="#efefef"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ControlPrimaryColorBackground}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=FormattedDate}" Width="50"/>
+
+                <DataGridTextColumn Header="Grid" Binding="{Binding Path=GridLastDay}" Width="50"/>
+                <DataGridTextColumn Header="Solar" Binding="{Binding Path=SolarLastDay}" Width="50"/>
+
+                <DataGridTextColumn Header="Water" Binding="{Binding Path=WaterLastDay}" Width="50"/>
+                <DataGridTextColumn Header="Gas" Binding="{Binding Path=GasLastDay}" Width="50"/>
+
+            </DataGrid.Columns>
+
+
         </DataGrid>
+
+
         <Grid Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#333333"  Margin="0,0,0,0" />
 
 

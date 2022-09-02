@@ -10,15 +10,15 @@ namespace SolarApp.Data
         {
             CleanedDate = cleanDate;
             RelatedEntries = relatedEntries;
-            SolarLastDay_clean = solarLastDay_clean;
-            GridLastDay_clean = gridLastDay_clean;
-            GasLastDay_clean = gasLastDay_clean;
-            WaterLastDay_clean = waterLastDay_clean;
+            SolarLastDay = solarLastDay_clean;
+            GridLastDay = gridLastDay_clean;
+            GasLastDay = gasLastDay_clean;
+            WaterLastDay = waterLastDay_clean;
         }
 
         public override string ToString()
         {
-            return $"Clean Date at ({CleanedDate.ToString("MM / dd / yyyy h: mm tt")}). Solar Used: {SolarLastDay_clean} | Grid Used: {GridLastDay_clean} | Gas Used: {GasLastDay_clean} | Water: {WaterLastDay_clean}";
+            return $"Clean Date at ({CleanedDate.ToString("MM / dd / yyyy h: mm tt")}). Solar Used: {SolarLastDay} | Grid Used: {GridLastDay} | Gas Used: {GasLastDay} | Water: {WaterLastDay}";
         }
 
         private List<SolarEntry> relatedEntries = new List<SolarEntry>();
@@ -38,8 +38,20 @@ namespace SolarApp.Data
             set
             {
                 SetField(ref cleanedDate, value);
+                FormattedDate = value.ToShortDateString();
             }
         }
+
+        private string formattedDate = "";
+        public string FormattedDate
+        {
+            get => formattedDate;
+            set
+            {
+                SetField(ref formattedDate, value);
+            }
+        }
+
 
         private double averageSolarPerHour_clean = -1;
         public double AverageSolarPerHour_clean
@@ -51,13 +63,13 @@ namespace SolarApp.Data
             }
         }
 
-        private double solarLastDay_clean = -1;
-        public double SolarLastDay_clean
+        private double solarLastDay = -1;
+        public double SolarLastDay
         {
-            get => solarLastDay_clean;
+            get => solarLastDay;
             set
             {
-                SetField(ref solarLastDay_clean, value);
+                SetField(ref solarLastDay, value);
             }
         }
 
@@ -71,13 +83,13 @@ namespace SolarApp.Data
             }
         }
 
-        private double gridLastDay_clean = -1;
-        public double GridLastDay_clean
+        private double gridLastDay = -1;
+        public double GridLastDay
         {
-            get => gridLastDay_clean;
+            get => gridLastDay;
             set
             {
-                SetField(ref gridLastDay_clean, value);
+                SetField(ref gridLastDay, value);
             }
         }
 
@@ -91,13 +103,13 @@ namespace SolarApp.Data
             }
         }
 
-        private double gasLastDay_clean = -1;
-        public double GasLastDay_clean
+        private double gasLastDay = -1;
+        public double GasLastDay
         {
-            get => gasLastDay_clean;
+            get => gasLastDay;
             set
             {
-                SetField(ref gasLastDay_clean, value);
+                SetField(ref gasLastDay, value);
             }
         }
 
@@ -111,13 +123,13 @@ namespace SolarApp.Data
             }
         }
 
-        private double waterLastDay_clean = -1;
-        public double WaterLastDay_clean
+        private double waterLastDay = -1;
+        public double WaterLastDay
         {
-            get => waterLastDay_clean;
+            get => waterLastDay;
             set
             {
-                SetField(ref waterLastDay_clean, value);
+                SetField(ref waterLastDay, value);
             }
         }
 

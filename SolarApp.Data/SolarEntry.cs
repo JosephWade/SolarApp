@@ -11,7 +11,7 @@ namespace SolarApp.Data
 
         }
 
-        public SolarEntry(int solarMeterReading, int gridMeterReading, DateTime timeOfRecording, int waterMeterReading, int gasMeterReading)
+        public SolarEntry(double solarMeterReading, double gridMeterReading, DateTime timeOfRecording, double waterMeterReading, double gasMeterReading)
         {
             SolarMeterReading = solarMeterReading;
             GridMeterReading = gridMeterReading;
@@ -26,8 +26,8 @@ namespace SolarApp.Data
         }
 
 
-        private int solarMeterReading = -1;
-        public int SolarMeterReading
+        private double solarMeterReading = -1;
+        public double SolarMeterReading
         {
             get => solarMeterReading;
             set
@@ -36,8 +36,8 @@ namespace SolarApp.Data
             }
         }
 
-        private int gridMeterReading = -1;
-        public int GridMeterReading
+        private double gridMeterReading = -1;
+        public double GridMeterReading
         {
             get => gridMeterReading;
             set
@@ -46,8 +46,8 @@ namespace SolarApp.Data
             }
         }
 
-        private int gasMeterReading = -1;
-        public int GasMeterReading
+        private double gasMeterReading = -1;
+        public double GasMeterReading
         {
             get => gasMeterReading;
             set
@@ -57,8 +57,8 @@ namespace SolarApp.Data
         }
         
 
-        private int waterMeterReading = -1;
-        public int WaterMeterReading
+        private double waterMeterReading = -1;
+        public double WaterMeterReading
         {
             get => waterMeterReading;
             set

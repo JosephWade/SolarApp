@@ -34,7 +34,7 @@ namespace SolarApp.Data
         }
 
         private List<CleanEntry> listOfCleanData= new List<CleanEntry>();
-        public List<CleanEntry> ListOfCleanData
+        public List<CleanEntry> CleanData
         {
             get => listOfCleanData;
             set
@@ -118,62 +118,13 @@ namespace SolarApp.Data
                 }
             }
 
-            CalculateAverages();
+            GenerateCleanData();
         }
 
 
 
-        public double CalculateWeightedAveragesofListHelper(List<SolarEntry> listOfEntriesToAverage, int field)
-        {
-            // TO DO: Take weighted average of list of entries 
-            List<DateTime> dates = listOfEntriesToAverage.Select(entry => entry.TimeOfRecording).ToList();
-            List<int> entries = new List<int>();
-            double slopeForEntry = 0;
 
-
-            switch (field)
-            {
-                case 0: // solar
-                    entries = listOfEntriesToAverage.Select(entry => entry.SolarMeterReading).ToList();
-                    break;
-                case 1: // grid
-                    entries = listOfEntriesToAverage.Select(entry => entry.GridMeterReading).ToList();
-                    break;
-                case 2: // gas
-                    entries = listOfEntriesToAverage.Select(entry => entry.GasMeterReading).ToList();
-                    break;
-                case 3: // water
-                    entries = listOfEntriesToAverage.Select(entry => entry.WaterMeterReading).ToList();
-                    break;
-                default:
-                    WriteLog($"Unable to find field ({field}) in SolarEntries. Weighted Average was unable to be found.");
-                    return -1;
-            }
-
-            // Create a list of weighted slopes
-            for (int entry=0; entry < listOfEntriesToAverage.Count -1; entry++)
-            {
-                double minutesAwayFromNextEntry = dates[entry].Subtract(dates[entry+1]).TotalMinutes;
-
-                double portionOfDayForSlope = minutesAwayFromNextEntry / TotalMinutesInADay;
-
-                slopeForEntry += (entries[entry+1] - entries[entry]) / minutesAwayFromNextEntry;
-            }
-
-            return -1;
-        }
-        
-        public CleanEntry CalculateWeightedAveragesofList(DateTime date, List<SolarEntry> listOfEntriesToAverage)
-        {
-            double solarAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 0);
-            double gridAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 1);
-            double gasAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 2);
-            double waterAverage = CalculateWeightedAveragesofListHelper(listOfEntriesToAverage, 3);
-
-            return new CleanEntry(date,solarAverage,gridAverage,gasAverage,waterAverage);
-        }
-
-        public void CalculateAverages()
+        public void GenerateCleanData()
         {
             // We need at least three elements to get the last 24 hours
             if(ListOfSolarEntries == null || ListOfSolarEntries.Count < 3)
@@ -222,12 +173,10 @@ namespace SolarApp.Data
                 weightedTimeSpans.Add(new Tuple<DateTime, TimeSpan, double, double, double, double>(currentEntry.TimeOfRecording, timeSpan, solarDifference, gridDifference, gasDifference,waterDifference));
             }
 
-            int mostRecentIndex = 1;
+            int mostRecentIndex = 0;
 
             foreach (DateTime date in DatesThatCanBeCleaned)
             {
-                mostRecentIndex -= 1;
-
                 List<SolarEntry> relatedEntries = new List<SolarEntry>();
                 TimeSpan currentlySpanned = new TimeSpan(0, 0, 0);
                 double averageSolarSlope = 0;
@@ -239,6 +188,7 @@ namespace SolarApp.Data
                 {
                     if(currentlySpanned.TotalMinutes >= TotalMinutesInADay)
                     {
+                        //mostRecentIndex++;
                         break;
                     }
                     double currentMinutes = weightedTimeSpans[mostRecentIndex].Item2.TotalMinutes;
@@ -255,23 +205,17 @@ namespace SolarApp.Data
                     averageGasSlope = (averageGasSlope * currentlySpanned.TotalMinutes + weightedTimeSpans[mostRecentIndex].Item5 * currentMinutes) / (currentlySpanned.TotalMinutes + currentMinutes);
                     averageWaterSlope = (averageWaterSlope * currentlySpanned.TotalMinutes + weightedTimeSpans[mostRecentIndex].Item6 * currentMinutes) / (currentlySpanned.TotalMinutes + currentMinutes);
 
-                    currentlySpanned = currentlySpanned + weightedTimeSpans[mostRecentIndex].Item2;
-
-                    ListOfCleanData.Add(new CleanEntry(date,relatedEntries,averageSolarSlope,averageGridSlope,averageGasSlope,averageWaterSlope));
+                    currentlySpanned += weightedTimeSpans[mostRecentIndex].Item2;
                 }
 
+                CleanData.Add(new CleanEntry(date, relatedEntries, averageSolarSlope, averageGridSlope, averageGasSlope, averageWaterSlope));
+                if(relatedEntries.Count > 1)
+                {
+                    mostRecentIndex -= 1;
+                }
 
             }
-
-
-            /*
-            for (int dateIndex = 0; dateIndex < datesThatNeedToBeFilled.Count; dateIndex++)
-            {
-                // To-do : Fill dates that need to be extrapolated
-
-            }
-            */
-
+            
         }
 
         public List<DateTime> DateRange(DateTime startDate, DateTime endDate)
