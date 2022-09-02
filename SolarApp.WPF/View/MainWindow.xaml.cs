@@ -38,7 +38,7 @@ namespace SolarApp.WPF
 
             Task.Delay(10);
 
-            SolarEntriesDataGrid.Items.Refresh();
+            CleanDataGrid.Items.Refresh();
         }
 
         private void text_PrviewKeyUp(object sender, KeyEventArgs e)

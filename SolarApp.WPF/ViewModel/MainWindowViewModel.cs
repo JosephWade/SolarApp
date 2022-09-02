@@ -133,7 +133,8 @@ namespace SolarApp.WPF.ViewModel
             {
                 SolarEntry newEntry = new SolarEntry(solarMeterReading, gridMeterReading, TimeOfRecording, waterMeterReading, gasMeterReading);
                 CommonVariables.DataMan.ListOfSolarEntries.Add(newEntry);
-                CommonVariables.MainWindowCodeBehind.SolarEntriesDataGrid.Items.Refresh();
+                CommonVariables.DataMan.GenerateCleanData();
+                CommonVariables.MainWindowCodeBehind.CleanDataGrid.Items.Refresh();
                 CommonVariables.DataMan.ExportData();
 
 

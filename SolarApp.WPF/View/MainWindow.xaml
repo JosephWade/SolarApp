@@ -10,7 +10,7 @@
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
-    
+
     <Grid IsMouseCapturedChanged="AddButton_IsMouseCaptureWithinChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -113,7 +113,7 @@
                 </Border>
             </Grid>
 
-            
+
 
             <!--<DatePicker IsTodayHighlighted="True" SelectedDate="{Binding TimeOfRecording}" />-->
             <toolkit:DateTimePicker Value="{Binding TimeOfRecording, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" DefaultValue="{Binding DefaultRecordingTime, NotifyOnSourceUpdated=True}" Grid.Column="9">
@@ -133,88 +133,82 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Image Grid.Column="0" Margin="1" RenderOptions.BitmapScalingMode="HighQuality"  Source="/images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBlock Grid.Column="1" Text="Add"/>
                     <Image Grid.Column="2" Margin="1" RenderOptions.BitmapScalingMode="HighQuality"  Source="/images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-                
+
             </Border>
 
         </Grid>
 
 
-        <!--<DataGrid x:Name="SolarEntriesDataGrid" Background="#FF333333" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" VirtualizingPanel.ScrollUnit="Pixel" IsReadOnly="True" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.ListOfSolarEntries, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,0">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                    <Setter Property="Background" Value="#555555"/>
-                    <Setter Property="SeparatorBrush" Value="#333333"/>
-                    <Setter Property="Foreground" Value="#333333"/>
+        <ListView Background="#FF555555" x:Name="CleanDataGrid" IsEnabled="True" HorizontalContentAlignment="Stretch" ItemsSource="{Binding CommonVariables.DataMan.CleanData}" Grid.Row="1" BorderBrush="Black" BorderThickness="1.5">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment"  Value="Stretch"/>
                 </Style>
-                
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
-                    <Setter Property="Background" Value="#555555"/>
-                    <Setter Property="Foreground" Value="#efefef"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource ControlPrimaryColorBackground}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-                
-                
-            </DataGrid.Resources>
+            </ListView.ItemContainerStyle>
 
-            <DataGrid.Columns>
+            <ListView.View>
+                <GridView>
 
-                <DataGridTextColumn Header="Time" Binding="{Binding Path=TimeOfRecording}" Width="50"/>
-                
-                <DataGridTextColumn Header="Grid" Binding="{Binding Path=GridMeterReading}" Width="50"/>
-                <DataGridTextColumn Header="Solar" Binding="{Binding Path=SolarMeterReading}" Width="50"/>
-                
-                <DataGridTextColumn Header="Water" Binding="{Binding Path=WaterMeterReading}" Width="50"/>
-                <DataGridTextColumn Header="Gas" Binding="{Binding Path=GasMeterReading}" Width="50"/>
-                
-            </DataGrid.Columns>
-            
+                    <GridViewColumn Header="Date" Width="65">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5" Margin="-7,-4">
+                                    <TextBlock Text="{Binding FormattedDate}" Margin="6,3"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Header="Grid" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5" Margin="-7,-4">
+                                    <TextBlock Text="{Binding GridLastDay}" Margin="6,3"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-        </DataGrid>-->
+                    <GridViewColumn Header="Solar" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="0,1.5" Margin="-7,-4">
+                                    <TextBlock Text="{Binding SolarLastDay}" Margin="6,3"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-        <DataGrid x:Name="SolarEntriesDataGrid" Background="#FF333333" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="FullRow" VirtualizingPanel.ScrollUnit="Pixel" IsReadOnly="True" Grid.Row="1" ColumnWidth="*" CanUserResizeRows="False" ItemsSource="{Binding CommonVariables.DataMan.CleanData, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,0,0,0">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                    <Setter Property="Background" Value="#555555"/>
-                    <Setter Property="SeparatorBrush" Value="#333333"/>
-                    <Setter Property="Foreground" Value="#333333"/>
-                </Style>
+                    <GridViewColumn Header="Water" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5" Margin="-7,-4">
+                                    <TextBlock Text="{Binding WaterLastDay}" Margin="6,3"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
-                    <Setter Property="Background" Value="#555555"/>
-                    <Setter Property="Foreground" Value="#efefef"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource ControlPrimaryColorBackground}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-
-
-            </DataGrid.Resources>
-
-            <DataGrid.Columns>
-
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=FormattedDate}" Width="50"/>
-
-                <DataGridTextColumn Header="Grid" Binding="{Binding Path=GridLastDay}" Width="50"/>
-                <DataGridTextColumn Header="Solar" Binding="{Binding Path=SolarLastDay}" Width="50"/>
-
-                <DataGridTextColumn Header="Water" Binding="{Binding Path=WaterLastDay}" Width="50"/>
-                <DataGridTextColumn Header="Gas" Binding="{Binding Path=GasLastDay}" Width="50"/>
-
-            </DataGrid.Columns>
-
-
-        </DataGrid>
+                    <GridViewColumn Header="Gas" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="0,1.5,1.5,1.5" Margin="-7,-4">
+                                    <TextBlock Text="{Binding GasLastDay}" Margin="6,3"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
 
 
         <Grid Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#333333"  Margin="0,0,0,0" />
