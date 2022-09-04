@@ -9,6 +9,7 @@ namespace SolarApp.Data
         public string ApplicationName = "SolarApp";
         public string ApplicationVersion = "0.0.1";
         public string DatabaseFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}Data{Path.DirectorySeparatorChar}SolarApp.json";
+        public string ImportFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}Data{Path.DirectorySeparatorChar}ImportData.csv";
 
         public const int TotalMinutesInADay = 1440;
 
@@ -16,6 +17,9 @@ namespace SolarApp.Data
         {
             ImportData();
 
+            ImportCsvData();
+
+            GenerateCleanData();
         }
 
         public override string ToString()
@@ -118,12 +122,53 @@ namespace SolarApp.Data
                 }
             }
 
-            GenerateCleanData();
+            
         }
 
+        public void ImportCsvData()
+        {
+            List<SolarEntry> entriesToImport = new List<SolarEntry>();
+            DateTime.TryParse("01 / 01 / 0001 12: 00 AM", out DateTime zeroDate);
 
+            if (!File.Exists(ImportFile))
+            {
+                return;
+            }
 
+            try
+            {
+                using (var rd = new StreamReader(ImportFile))
+                {
+                    rd.ReadLine();
+                    while (!rd.EndOfStream)
+                    {
+                        List<string> splits = rd.ReadLine().Split(',').ToList();
 
+                        DateTime.TryParse(splits[0], out DateTime date);
+
+                        // NOTE: Some lines in CSV can be interpreted as all-zeros, so this will prevent this line from being added
+                        if (!date.Equals(zeroDate))
+                        {
+                            double.TryParse(splits[1], out double grid);
+                            double.TryParse(splits[2], out double solar);
+                            double.TryParse(splits[3], out double water);
+                            double.TryParse(splits[4], out double gas);
+                            entriesToImport.Add(new SolarEntry(solar, grid, date, water, gas));
+                        }
+                        
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                WriteLog($"There was a problem importing data from the importdata.cvs file ({ImportFile}). Please make sure the file is closed. Error: {e.Message}");
+            }
+            
+            ListOfSolarEntries.AddRange(entriesToImport);
+
+        }
+
+       
         public void GenerateCleanData()
         {
             // We need at least three elements to get the last 24 hours
@@ -132,12 +177,12 @@ namespace SolarApp.Data
                 return;
             }
 
-            ListOfSolarEntries = listOfSolarEntries.OrderBy(entry => entry.TimeOfRecording).ToList();
-
             if (ListOfSolarEntries.Count() < 3)
             {
                 return;
             }
+
+            ListOfSolarEntries.Sort((x, y) => x.TimeOfRecording.CompareTo(y.TimeOfRecording));
 
             // Generate the list of dates that can be cleaned.
             // This will be used as the basis for the 24 hour average.

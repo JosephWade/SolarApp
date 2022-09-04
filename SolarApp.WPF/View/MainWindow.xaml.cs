@@ -39,6 +39,8 @@ namespace SolarApp.WPF
             Task.Delay(10);
 
             CleanDataGrid.Items.Refresh();
+            CleanDataGrid.Items.MoveCurrentToLast();
+            CleanDataGrid.ScrollIntoView(CleanDataGrid.Items.CurrentItem);
         }
 
         private void text_PrviewKeyUp(object sender, KeyEventArgs e)
@@ -50,16 +52,6 @@ namespace SolarApp.WPF
         private void DateTimePicker_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             ((DateTimePicker)sender).GetBindingExpression(DateTimePicker.TextProperty).UpdateSource();
-        }
-
-        private string textForRecording = "123";
-        public string TextForRecording
-        {
-            get => TextForRecording;
-            set
-            {
-                textForRecording = value;
-            }
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -49,7 +49,26 @@ namespace SolarApp.WPF.ViewModel
             {
                 SetField(ref commonVariables, value);
             }
-        }        
+        }
+
+        private CleanEntry selectedCleanEntry = null;
+        public CleanEntry SelectedCleanEntry
+        {
+            get => selectedCleanEntry;
+            set
+            {
+                SetField(ref selectedCleanEntry, value);
+
+                HeightOfSnapPanel = (value==null) ? 0 : 100;
+            }
+        }
+
+        private double heightOfSnapPanel = 0;
+        public double HeightOfSnapPanel
+        {
+            get => heightOfSnapPanel;
+            set => SetField(ref heightOfSnapPanel, value);
+        }
 
         private string solarMeterTextbox = "";
         public string SolarMeterTextbox

@@ -25,7 +25,6 @@ namespace SolarApp.Data
             return $"Solar Entry recorded at ({TimeOfRecording.ToString("MM / dd / yyyy h: mm tt")}). Solar: {SolarMeterReading} | Grid: {GridMeterReading} | Gas: {GasMeterReading} | Water: {WaterMeterReading}";
         }
 
-
         private double solarMeterReading = -1;
         public double SolarMeterReading
         {

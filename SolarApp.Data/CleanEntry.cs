@@ -53,13 +53,13 @@ namespace SolarApp.Data
         }
 
 
-        private double averageSolarPerHour_clean = -1;
-        public double AverageSolarPerHour_clean
+        private double averageSolarPerHour = -1;
+        public double AverageSolarPerHour
         {
-            get => averageSolarPerHour_clean;
+            get => averageSolarPerHour;
             set
             {
-                SetField(ref averageSolarPerHour_clean, value);
+                SetField(ref averageSolarPerHour, value);
             }
         }
 
@@ -70,16 +70,17 @@ namespace SolarApp.Data
             set
             {
                 SetField(ref solarLastDay, value);
+                AverageSolarPerHour = value / 24;
             }
         }
 
-        private double averageGridPerHour_clean = -1;
-        public double AverageGridPerHour_clean
+        private double averageGridPerHour = -1;
+        public double AverageGridPerHour
         {
-            get => averageGridPerHour_clean;
+            get => averageGridPerHour;
             set
             {
-                SetField(ref averageGridPerHour_clean, value);
+                SetField(ref averageGridPerHour, value);
             }
         }
 
@@ -90,16 +91,17 @@ namespace SolarApp.Data
             set
             {
                 SetField(ref gridLastDay, value);
+                AverageGridPerHour = value / 24;
             }
         }
 
-        private double averageGasPerHour_clean = -1;
-        public double AverageGasPerHour_clean
+        private double averageGasPerHour = -1;
+        public double AverageGasPerHour
         {
-            get => averageGasPerHour_clean;
+            get => averageGasPerHour;
             set
             {
-                SetField(ref averageGasPerHour_clean, value);
+                SetField(ref averageGasPerHour, value);
             }
         }
 
@@ -110,16 +112,17 @@ namespace SolarApp.Data
             set
             {
                 SetField(ref gasLastDay, value);
+                AverageGasPerHour = value / 24;
             }
         }
 
-        private double averageWaterPerHour_clean = -1;
-        public double AverageWaterPerHour_clean
+        private double averageWaterPerHour = -1;
+        public double AverageWaterPerHour
         {
-            get => averageWaterPerHour_clean;
+            get => averageWaterPerHour;
             set
             {
-                SetField(ref averageWaterPerHour_clean, value);
+                SetField(ref averageWaterPerHour, value);
             }
         }
 
@@ -130,6 +133,7 @@ namespace SolarApp.Data
             set
             {
                 SetField(ref waterLastDay, value);
+                AverageWaterPerHour = value / 24;
             }
         }
 
