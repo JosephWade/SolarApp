@@ -182,12 +182,16 @@ namespace SolarApp.Data
                 return;
             }
 
-            ListOfSolarEntries.Sort((x, y) => x.TimeOfRecording.CompareTo(y.TimeOfRecording));
+            ListOfSolarEntries = ListOfSolarEntries.OrderBy(e => e.TimeOfRecording).ToList();
+
+            List<DateTime> DatesThatCanBeCleaned = DateRange(ListOfSolarEntries[1].TimeOfRecording, ListOfSolarEntries[ListOfSolarEntries.Count - 2].TimeOfRecording).Select(dateTime => new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0)).ToList();
+
+            //ListOfSolarEntries.Sort((x, y) => x.TimeOfRecording.CompareTo(y.TimeOfRecording));
 
             // Generate the list of dates that can be cleaned.
             // This will be used as the basis for the 24 hour average.
             // Note: Disregard first and last entry as the average data can't be calculated for them
-            List<DateTime> DatesThatCanBeCleaned = DateRange(ListOfSolarEntries[1].TimeOfRecording, ListOfSolarEntries[ListOfSolarEntries.Count-2].TimeOfRecording).Select(dateTime => new DateTime(dateTime.Year,dateTime.Month,dateTime.Day,0,0,0)).ToList();
+            
 
             if (DatesThatCanBeCleaned.Count() < 3)
             {
@@ -219,6 +223,7 @@ namespace SolarApp.Data
             }
 
             int mostRecentIndex = 0;
+            double previousSolarSurplus = 0;
 
             foreach (DateTime date in DatesThatCanBeCleaned)
             {
@@ -253,7 +258,16 @@ namespace SolarApp.Data
                     currentlySpanned += weightedTimeSpans[mostRecentIndex].Item2;
                 }
 
-                CleanData.Add(new CleanEntry(date, relatedEntries, averageSolarSlope, averageGridSlope, averageGasSlope, averageWaterSlope));
+                double currentSurplus = previousSolarSurplus + -1 * averageGridSlope;
+                if(currentSurplus < 0)
+                {
+                    currentSurplus = 0;
+                }
+
+                CleanData.Add(new CleanEntry(date, relatedEntries, averageSolarSlope, averageGridSlope, averageGasSlope, averageWaterSlope, currentSurplus));
+
+                previousSolarSurplus = currentSurplus;
+
                 if(relatedEntries.Count > 1)
                 {
                     mostRecentIndex -= 1;

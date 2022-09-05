@@ -6,14 +6,17 @@ namespace SolarApp.Data
 {
     public class CleanEntry : ModelBase
     {
-        public CleanEntry(DateTime cleanDate, List<SolarEntry> relatedEntries, double solarLastDay_clean, double gridLastDay_clean, double gasLastDay_clean, double waterLastDay_clean)
+        public CleanEntry(DateTime cleanDate, List<SolarEntry> relatedEntries, double solarLastDay_clean, double gridLastDay_clean, double gasLastDay_clean, double waterLastDay_clean, double powerSurplus)
         {
             CleanedDate = cleanDate;
             RelatedEntries = relatedEntries;
             SolarLastDay = solarLastDay_clean;
-            GridLastDay = gridLastDay_clean;
+            PowerSurplusLastDay = -1 * gridLastDay_clean;
+            GridLastDay = gridLastDay_clean + solarLastDay_clean;
             GasLastDay = gasLastDay_clean;
             WaterLastDay = waterLastDay_clean;
+
+            PowerSurplusCurrent = powerSurplus;
         }
 
         public override string ToString()
@@ -137,15 +140,17 @@ namespace SolarApp.Data
             }
         }
 
-        private double powerSurplusToday = -1;
-        public double PowerSurplusToday
+
+        private double powerSurplusLastDay = -1;
+        public double PowerSurplusLastDay
         {
-            get => powerSurplusToday;
+            get => powerSurplusLastDay;
             set
             {
-                SetField(ref powerSurplusToday, value);
+                SetField(ref powerSurplusLastDay, value);
             }
         }
+
 
         private double powerSurplusCurrent = -1;
         public double PowerSurplusCurrent

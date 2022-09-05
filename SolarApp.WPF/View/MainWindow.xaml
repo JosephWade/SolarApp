@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SolarApp.WPF" xmlns:ViewModel="clr-namespace:SolarApp.WPF.ViewModel"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800" Style="{DynamicResource CustomWindowStyle}" Background="#444444">
+        Title="{Binding WindowTitle}" Height="500" Width="1000" Style="{DynamicResource CustomWindowStyle}" Background="#444444">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
@@ -169,7 +169,27 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     
-                        <GridViewColumn Header="Grid (Day)" Width="75">
+                        <GridViewColumn Header="Solar Bank" Width="75">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="0,1.5,1.5,1.5" Margin="-7,-4">
+                                        <TextBlock Text="{Binding PowerSurplusCurrent, StringFormat={}{0:#,0.00}}" Margin="6,3"/>
+                                    </Border>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    
+                        <GridViewColumn Header="Power Surplus" Width="75">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="0,1.5,1.5,1.5" Margin="-7,-4">
+                                        <TextBlock Text="{Binding PowerSurplusLastDay, StringFormat={}{0:#,0.00}}" Margin="6,3"/>
+                                    </Border>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    
+                        <GridViewColumn Header="Grid/Day" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="0,1.5" Margin="-7,-4">
@@ -189,7 +209,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Solar (Day)" Width="75">
+                        <GridViewColumn Header="Solar/Day" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5" Margin="-7,-4">
@@ -209,7 +229,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Water (Day)" Width="75">
+                        <GridViewColumn Header="Water/Day" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5" Margin="-7,-4">
@@ -229,7 +249,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Gas (Day)" Width="75">
+                        <GridViewColumn Header="Gas/Day" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource ContainerBorder}" BorderThickness="1.5,1.5,1.5,1.5" Margin="-7,-4">
