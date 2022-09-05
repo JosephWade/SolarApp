@@ -1,6 +1,7 @@
 ﻿using MVVM.WPF;
 using System;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SolarApp.Data
 {
@@ -137,7 +138,10 @@ namespace SolarApp.Data
 
             try
             {
-                using (var rd = new StreamReader(ImportFile))
+                // NOTE: This allows us to read the CSV without closing Excel
+                FileStream fs = new FileStream(ImportFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+                using (var rd = new StreamReader(fs))
                 {
                     rd.ReadLine();
                     while (!rd.EndOfStream)
